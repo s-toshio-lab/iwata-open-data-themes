@@ -1,3 +1,3 @@
 ﻿theme_id,theme_name,formula_id,formula_name,value,unit,data_source,calculation_condition,notes,status
 15,緑地・暑熱,F068,緑地率,0.40361,%,zenodo 緑被データ (町丁目別),緑地面積 / 対象面積 * 100 (FRAC_VEG平均),,計算済
-15,緑地・暑熱,F079,カーネル密度推定（公園）,272.590226,密度/単位面積,p1_parks.csv 公園座標 (94件),ガウスカーネル 10x10グリッド最大値,,計算済
+15,緑地・暑熱,F079,カーネル密度推定（公園）,272.590226,密度/単位面積,p1_parks.csv 公園座標 (93件),ガウスカーネル 10x10グリッド最大値,※旧94件は行数・最大IDの数え違い（実件数93件）,計算済
