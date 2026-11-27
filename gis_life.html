@@ -19,12 +19,9 @@
 .btns button{font-size:14px;padding:8px 14px;border-radius:8px;border:1px solid #888;background:#fff;cursor:pointer;}
 .btns button.on{background:#1f6feb;color:#fff;border-color:#1f6feb;}
 .leaflet-popup-content{font-size:14px !important;}
-.gap-pole{background:none;border:none;}
-.gap-pole .pole{position:absolute;left:0;top:0;width:22px;height:142px;transform-origin:50% 100%;animation:pole-drop .5s ease-in both;}
-.gap-pole .pole i{display:block;position:relative;width:6px;height:120px;margin:0 auto;background:linear-gradient(90deg,#666,#1a1a1a 45%,#000 60%,#4d4d4d);box-shadow:1px 0 2px rgba(0,0,0,.5);}
-.gap-pole .pole i::after{content:'';position:absolute;left:0;bottom:-8px;width:0;height:0;border-left:3px solid transparent;border-right:3px solid transparent;border-top:8px solid #0d0d0d;}
-.gap-pole .pole span{display:block;box-sizing:border-box;width:22px;height:22px;line-height:18px;background:#111;border:2px solid #fff;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.55);color:#fff;font-weight:bold;font-size:13px;text-align:center;}
-@keyframes pole-drop{0%{transform:translateY(-142px);}82%{transform:translateY(0);}90%{transform:translateY(2px) scaleY(.96);}100%{transform:translateY(0) scaleY(1);}}
+.gap-star{background:none;border:none;}
+.gap-star .star{position:relative;width:36px;height:36px;font-size:30px;line-height:34px;text-align:center;color:#c00000;text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 3px #fff,1px 1px 3px rgba(0,0,0,.55);}
+.gap-star .star span{position:absolute;right:-3px;bottom:-3px;font-size:12px;font-weight:bold;line-height:1;color:#111;text-shadow:0 0 2px #fff,0 0 2px #fff,0 0 2px #fff,0 0 2px #fff,0 0 2px #fff;}
 </style>
 </head>
 <body>
@@ -47,7 +44,7 @@
 <button id="bFull">全画面</button>
 </div>
 <div id="map" class="map map-tall"></div>
-<p class="src">青＝バス停、赤系＝生活バス（濃赤は1日5本以下）、茶＝お店、黒丸数字＝500m以上エリア代表。背景地図：OpenStreetMap。</p></div>
+<p class="src">青＝バス停、赤系＝生活バス（濃赤は1日5本以下）、茶＝お店、星印＝500m以上エリア代表。背景地図：OpenStreetMap。</p></div>
 <div class="card"><h2>500m以上エリア代表12スポット（直線概算）</h2>
 <table class="data"><thead><tr><th>#</th><th>緯度</th><th>経度</th><th>最寄りバス停</th><th>距離</th><th>最寄り店</th><th>距離</th></tr></thead><tbody>
 <tr><td>1</td><td>34.70346</td><td>137.88738</td><td>ヤマハ</td><td>2066m</td><td>ファミリーマート</td><td>1972m</td></tr><tr><td>2</td><td>34.72776</td><td>137.88468</td><td>東部台地</td><td>583m</td><td>ファミリーマート</td><td>739m</td></tr><tr><td>3</td><td>34.72101</td><td>137.84553</td><td>西小学校</td><td>610m</td><td>ファミリーマート</td><td>1324m</td></tr><tr><td>4</td><td>34.73721</td><td>137.85228</td><td>原新田北</td><td>537m</td><td>遠鉄ストア</td><td>531m</td></tr><tr><td>5</td><td>34.71966</td><td>137.81853</td><td>郷社裏</td><td>601m</td><td>杏林堂ドラッグストア 豊田駅前店</td><td>583m</td></tr><tr><td>6</td><td>34.73181</td><td>137.81178</td><td>長森</td><td>511m</td><td>遠鉄ストアー池田店</td><td>862m</td></tr><tr><td>7</td><td>34.73721</td><td>137.87253</td><td>磐田学園前</td><td>587m</td><td>ウエルシア</td><td>579m</td></tr><tr><td>8</td><td>34.72776</td><td>137.84013</td><td>河原町北</td><td>946m</td><td>サークルK</td><td>1775m</td></tr><tr><td>9</td><td>34.68186</td><td>137.80773</td><td>竜洋変電所</td><td>626m</td><td>サークルK</td><td>1021m</td></tr><tr><td>10</td><td>34.73046</td><td>137.82258</td><td>郷社裏</td><td>662m</td><td>杏林堂薬局ドラッグストア</td><td>572m</td></tr><tr><td>11</td><td>34.67916</td><td>137.79828</td><td>掛塚</td><td>507m</td><td>サークルK</td><td>1249m</td></tr><tr><td>12</td><td>34.68861</td><td>137.79963</td><td>竜洋変電所北</td><td>566m</td><td>サークルK</td><td>1976m</td></tr>
@@ -78,7 +75,7 @@ var gBus=L.layerGroup(), gGtfs=L.layerGroup(), gShop=L.layerGroup(), gGap=L.laye
 bus.forEach(function(p){ L.circleMarker([p.la,p.lo],{radius:3,color:'#1a5fb4',fillColor:'#1a5fb4',fillOpacity:.8,weight:1}).bindPopup('<b>'+p.n+'</b><br>'+p.o+'<br>'+p.s).addTo(gBus); });
 gtfs.forEach(function(p){ var c=freqColor(p.w); L.circleMarker([p.la,p.lo],{radius:4,color:c,fillColor:c,fillOpacity:.85,weight:1}).bindPopup('<b>'+p.n+'</b><br>平日'+p.w+'本（'+p.wf+'〜'+p.wl+'）<br>休日'+p.h+'本').addTo(gGtfs); });
 shops.forEach(function(p){ var l=p.k==='supermarket'?'スーパー':(p.k==='convenience'?'コンビニ':(p.k==='drugstore'?'ドラッグストア':'薬局')); L.circleMarker([p.la,p.lo],{radius:4,color:'#8D5A2B',fillColor:'#F5C16C',fillOpacity:.9,weight:1}).bindPopup('<b>'+p.n+'</b><br>'+l).addTo(gShop); });
-gap.forEach(function(p,i){ L.marker([p.lat,p.lon],{icon:L.divIcon({className:'gap-pole', html:'<div class="pole" style="animation-delay:'+(i*130)+'ms"><i></i><span>'+(i+1)+'</span></div>', iconSize:[22,142], iconAnchor:[11,142]})}).bindPopup('#'+(i+1)+' バス'+p.bus_m+'m（'+p.bus+'）<br>店'+p.shop_m+'m（'+p.shop+'）').addTo(gGap); });
+gap.forEach(function(p,i){ L.marker([p.lat,p.lon],{icon:L.divIcon({className:'gap-star', html:'<div class="star">★<span>'+(i+1)+'</span></div>', iconSize:[36,36], iconAnchor:[18,18]})}).bindPopup('#'+(i+1)+' バス'+p.bus_m+'m（'+p.bus+'）<br>店'+p.shop_m+'m（'+p.shop+'）').addTo(gGap); });
 gBus.addTo(map); gGtfs.addTo(map); gShop.addTo(map); gGap.addTo(map);
 function tog(id,layer){ var b=document.getElementById(id); b.onclick=function(){ if(map.hasLayer(layer)){map.removeLayer(layer);b.classList.remove('on');} else {map.addLayer(layer);b.classList.add('on');} }; }
 tog('bBus',gBus); tog('bGtfs',gGtfs); tog('bShop',gShop); tog('bGap',gGap);
